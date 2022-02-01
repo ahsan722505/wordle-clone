@@ -1,0 +1,55 @@
+:root{
+    --btnWidth : 46px;
+}
+.keyboardButton{
+    background-color: var(--color2);
+    width: var(--btnWidth);
+    height: 60px;
+    display: inline-block;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+    border-radius: .2rem;
+    position: relative;
+    cursor: pointer;
+    color: white;
+    border: none;
+    
+}
+.keyboardButton span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.row3 .keyboardButton:first-child,.row3 .keyboardButton:last-child{
+    width: calc(var(--btnWidth)*1.6);
+}
+.keyboard{
+    width: 100%;
+    text-align: center;
+}
+@media (max-width : 600px) {
+        :root{
+            --btnWidth : 30px
+        }
+        .row3 .keyboardButton:first-child{
+            font-size: .8rem;
+        }
+}
+@media (max-width : 400px) {
+    :root{
+        --btnWidth : 25px
+    }
+    .row3 .keyboardButton:first-child{
+        font-size: .6rem;
+    }
+
+}
+@media (max-width : 350px) {
+    :root{
+        --btnWidth : 22px
+    }
+    .row3 .keyboardButton:first-child{
+        font-size: .6rem;
+    }
+}

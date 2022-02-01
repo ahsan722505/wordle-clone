@@ -1,0 +1,13 @@
+.cell{
+    width: 57px;
+    height: 57px;
+    display: inline-block;
+    border: 2px solid var(--color1);
+    margin-right: .2rem;
+}
+.grid{
+    width: 100%;
+    margin:  2rem auto;
+    margin-bottom: .4rem;
+    text-align: center;
+}
