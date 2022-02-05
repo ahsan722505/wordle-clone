@@ -21,3 +21,12 @@
     margin-bottom: .4rem;
     text-align: center;
 }
+.absent{
+    background-color: var(--color-absent);
+}
+.present{
+    background-color: var(--color-present);
+}
+.correct{
+    background-color: var(--color-correct);
+}
