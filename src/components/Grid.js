@@ -1,28 +1,41 @@
 import styles from "./Grid.module.css";
 import { useState } from "react";
 import { createGrid } from "../helpers/util";
-import { useRef } from "react";
+import { useRef,useEffect } from "react";
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+}
 const Grid=({letters,currentRow,word,checkMode})=>{
     const [grid,setGrid]=useState(createGrid(6,5));
+    const [classes,setClasses]=useState(new Array(5).fill(""));
     const wordRef=useRef(word);
-    // const eliminate=(letter)=>{
-    //     setLocalWord
-    // }
+    const lettersRef=useRef();
     let colCount=0;
-    const getStyle=(letterIndex,rowCount)=>{
-        console.log(wordRef.current);
-        if(!checkMode) return "";
-        if(rowCount !== currentRow) return "";
-        if(letters[letterIndex] === wordRef.current[letterIndex].toUpperCase()){
-            wordRef.current=wordRef.current.replace(letters[letterIndex].toLowerCase(),'_');
-            return styles.correct;
-        } 
-        if(wordRef.current.includes(letters[letterIndex].toLowerCase())){
-            wordRef.current=wordRef.current.replace(letters[letterIndex].toLowerCase(),'_');
-            return styles.present;
-        } 
-        return styles.absent;
-    }
+    useEffect(()=>{
+        if(!checkMode) return;
+            lettersRef.current=letters.join("");
+            let updatedClasses=new Array(5).fill("");
+            letters.forEach((eachLetter,i)=>{
+                if(eachLetter.toLowerCase() === wordRef.current[i]){
+                    updatedClasses[i]=styles.correct;
+                    wordRef.current= wordRef.current.replaceAt(i,'_');
+                    lettersRef.current=lettersRef.current.replaceAt(i,'_');
+                }
+            })
+
+            letters.forEach((eachLetter,i)=>{
+                if(lettersRef.current[i] === '_') return;
+                if(wordRef.current.includes(eachLetter.toLowerCase())){
+                    updatedClasses[i]=styles.present;
+                   wordRef.current= wordRef.current.replace(eachLetter.toLowerCase(),'_');
+                }else{
+                    updatedClasses[i]=styles.absent;
+                }
+            })
+            setClasses(updatedClasses);
+
+    },[checkMode,letters])
+    
     return(
         <div className={styles.grid}>
             {grid.map((eachRow,rowCount)=>{
@@ -30,7 +43,7 @@ const Grid=({letters,currentRow,word,checkMode})=>{
                     <div className={styles.row}>
                             {eachRow.map(eachCell=>{
                                 return(
-                                    <div className={`${styles.cell} ${getStyle(colCount,rowCount)}`}><span>{currentRow === rowCount && letters[colCount++]}</span></div>
+                                    <div className={`${styles.cell} ${currentRow === rowCount && classes[colCount]}`}><span>{currentRow === rowCount && letters[colCount++]}</span></div>
                                 )
                             })}
                     </div>

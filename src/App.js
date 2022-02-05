@@ -14,7 +14,8 @@ function App() {
   
   const handleKeyDown=useCallback((e)=>{
     console.log(e.key);
-    if(((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) && (letters.length<=5)){
+    if(((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) && (letters.length<=4)){
+      console.log("still including");
       const letter=e.key.toUpperCase();
       setLetters(state=>{
         let newState=[...state];
@@ -26,7 +27,13 @@ function App() {
       // check row
       setCheckMode(true);
       console.log(letters);
-
+    }
+    
+    if(e.key === "Backspace"){
+          setLetters(state=>{
+            let newState=[...state];
+            newState.pop();
+            return newState;     })
     }
 
   },[letters]);
