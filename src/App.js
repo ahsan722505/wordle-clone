@@ -6,7 +6,7 @@ import { useState,useEffect,useCallback } from 'react';
 function App() {
   const [currentRow,setCurrentRow]=useState(0);
   const [letters,setLetters]=useState([]);
-  const [word,setWord]=useState("ahsan");
+  const [word,setWord]=useState(getWord());
   const [checkMode,setCheckMode]=useState(false);
   const [typeMode,setTypeMode]=useState(true);
   

@@ -39,7 +39,11 @@ const Grid=({letters,currentRow,word,checkMode,nextRow,typeMode})=>{
 
     },[checkMode,letters,classes,nextRow])
     useEffect(()=>{
-        if(classes.length === 30 && typeMode) alert("correct word: "+ word);
+        if(classes.length === 30 && typeMode){
+            setTimeout(()=>{
+                alert("correct word: "+ word);
+            },1000);
+        } 
     },[classes,typeMode])
     
     
