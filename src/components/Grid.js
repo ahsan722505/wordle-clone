@@ -5,17 +5,18 @@ import { useRef,useEffect } from "react";
 String.prototype.replaceAt = function(index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
-const Grid=({letters,currentRow,word,checkMode})=>{
+const Grid=({letters,currentRow,word,checkMode,nextRow})=>{
     const [grid,setGrid]=useState(createGrid(6,5));
-    const [classes,setClasses]=useState(new Array(5).fill(""));
+    const [classes,setClasses]=useState([]);
     const wordRef=useRef(word);
     const lettersRef=useRef();
     let colCount=0;
     useEffect(()=>{
         if(!checkMode) return;
-            lettersRef.current=letters.join("");
+            lettersRef.current=letters.slice(letters.length-5).join("");
+            console.log(lettersRef.current);
             let updatedClasses=new Array(5).fill("");
-            letters.forEach((eachLetter,i)=>{
+            letters.slice(letters.length-5).forEach((eachLetter,i)=>{
                 if(eachLetter.toLowerCase() === wordRef.current[i]){
                     updatedClasses[i]=styles.correct;
                     wordRef.current= wordRef.current.replaceAt(i,'_');
@@ -23,7 +24,7 @@ const Grid=({letters,currentRow,word,checkMode})=>{
                 }
             })
 
-            letters.forEach((eachLetter,i)=>{
+            letters.slice(letters.length-5).forEach((eachLetter,i)=>{
                 if(lettersRef.current[i] === '_') return;
                 if(wordRef.current.includes(eachLetter.toLowerCase())){
                     updatedClasses[i]=styles.present;
@@ -32,9 +33,13 @@ const Grid=({letters,currentRow,word,checkMode})=>{
                     updatedClasses[i]=styles.absent;
                 }
             })
-            setClasses(updatedClasses);
+            console.log([...classes,...updatedClasses]);
+            setClasses((state)=>[...state,...updatedClasses]);
+            // code to be prepared for next row
+            nextRow();
+            wordRef.current=word;
 
-    },[checkMode,letters])
+    },[checkMode,letters,classes,nextRow])
     
     return(
         <div className={styles.grid}>
@@ -43,7 +48,7 @@ const Grid=({letters,currentRow,word,checkMode})=>{
                     <div className={styles.row}>
                             {eachRow.map(eachCell=>{
                                 return(
-                                    <div className={`${styles.cell} ${currentRow === rowCount && classes[colCount]}`}><span>{currentRow === rowCount && letters[colCount++]}</span></div>
+                                    <div className={`${styles.cell} ${ classes[colCount]}`}><span>{letters[colCount++]}</span></div>
                                 )
                             })}
                     </div>
