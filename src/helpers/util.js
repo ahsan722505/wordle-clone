@@ -13,7 +13,7 @@ export const createGrid=(rows,cols)=>{
 }
 export const firstKeyboardRow=['Q','W','E','R','T','Y','U','I','O','P'];
 export const secondKeyboardRow=['A','S','D','F','G','H','J','K','L'];
-export const thirdKeyboardRow=["ENTER",'Z','X','C','V','B','N','M',<i class="fas fa-backspace"></i>];
+export const thirdKeyboardRow=["Enter",'Z','X','C','V','B','N','M',"Backspace"];
 export const getWord=(min = 0, max = 2314)=> {
     let difference = max - min; 
     let rand = Math.random();

@@ -1,11 +1,11 @@
 import styles from "./Grid.module.css";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { createGrid } from "../helpers/util";
 import { useRef,useEffect } from "react";
 String.prototype.replaceAt = function(index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
-const Grid=({letters,currentRow,word,checkMode,nextRow})=>{
+const Grid=({letters,currentRow,word,checkMode,nextRow,typeMode})=>{
     const [grid,setGrid]=useState(createGrid(6,5));
     const [classes,setClasses]=useState([]);
     const wordRef=useRef(word);
@@ -14,7 +14,6 @@ const Grid=({letters,currentRow,word,checkMode,nextRow})=>{
     useEffect(()=>{
         if(!checkMode) return;
             lettersRef.current=letters.slice(letters.length-5).join("");
-            console.log(lettersRef.current);
             let updatedClasses=new Array(5).fill("");
             letters.slice(letters.length-5).forEach((eachLetter,i)=>{
                 if(eachLetter.toLowerCase() === wordRef.current[i]){
@@ -33,13 +32,17 @@ const Grid=({letters,currentRow,word,checkMode,nextRow})=>{
                     updatedClasses[i]=styles.absent;
                 }
             })
-            console.log([...classes,...updatedClasses]);
             setClasses((state)=>[...state,...updatedClasses]);
             // code to be prepared for next row
             nextRow();
             wordRef.current=word;
 
     },[checkMode,letters,classes,nextRow])
+    useEffect(()=>{
+        if(classes.length === 30 && typeMode) alert("correct word: "+ word);
+    },[classes,typeMode])
+    
+    
     
     return(
         <div className={styles.grid}>

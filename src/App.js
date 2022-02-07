@@ -9,12 +9,9 @@ function App() {
   const [word,setWord]=useState("ahsan");
   const [checkMode,setCheckMode]=useState(false);
   const [typeMode,setTypeMode]=useState(true);
-  // useEffect(()=>{
-  //   alert(word);
-  // },[]);
+  
   
   const handleKeyDown=useCallback((e)=>{
-    console.log(e.key);
     if((letters.length +1) % 5 === 0) setTypeMode(false);
     if(e.key === "Backspace"){
       if(typeMode && letters.length % 5 === 0) return;
@@ -23,10 +20,10 @@ function App() {
         newState.pop();
         return newState;     })
         setTypeMode(true);
+        
        
 }
     if(e.key === "Enter" && (letters.length %5 === 0)){
-      // check row
       setCheckMode(true);
     }
      if(((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) && (typeMode)){
@@ -37,9 +34,6 @@ function App() {
         return newState;
       })
     };
-    
-    
-
   },[letters,checkMode,typeMode]);
   useEffect(()=>{
     window.addEventListener("keydown",handleKeyDown);
@@ -55,8 +49,8 @@ function App() {
 
   return (
     <div className="App">
-      <Grid letters={letters} currentRow={currentRow} word={word} checkMode={checkMode} nextRow={nextRow}/>
-      <Keyboard/>
+      <Grid letters={letters} currentRow={currentRow} word={word} checkMode={checkMode} nextRow={nextRow} typeMode={typeMode}/>
+      <Keyboard handleKeyDown={handleKeyDown}/>
     </div>
   );
 }
