@@ -23,7 +23,7 @@ function App() {
         
        
 }
-    if(e.key === "Enter" && (letters.length %5 === 0)){
+    if(e.key === "Enter" && (letters.length %5 === 0) && !typeMode){
       setCheckMode(true);
     }
      if(((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) && (typeMode)){
